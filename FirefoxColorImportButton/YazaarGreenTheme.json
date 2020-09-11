@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "version": "1.0",
+  "name": "abc123",
+  "theme": {
+    "colors": {
+      "toolbar": "rgb(0, 0, 0)",
+      "toolbar_text": "rgb(212, 212, 212)",
+      "frame": "rgb(0, 0, 0)",
+      "tab_background_text": "rgb(202, 202, 202)",
+      "toolbar_field": "rgb(52, 52, 52)",
+      "toolbar_field_text": "rgb(255, 255, 255)",
+      "tab_line": "rgb(0, 255, 0)",
+      "popup": "rgb(0, 0, 0)",
+      "popup_text": "rgb(140, 140, 140)",
+      "button_background_active": "rgb(71, 71, 71)",
+      "button_background_hover": "rgb(53, 53, 53)",
+      "frame_inactive": "rgb(55, 55, 55)",
+      "ntp_background": "rgb(38, 38, 38)",
+      "ntp_text": "rgb(255, 255, 255)",
+      "sidebar_border": "rgb(0, 255, 0)",
+      "sidebar_text": "rgb(0, 255, 0)",
+      "sidebar": "rgb(0, 0, 0)",
+      "tab_loading": "rgb(0, 255, 0)",
+      "tab_text": "rgb(0, 255, 0)",
+      "toolbar_field_border": "rgb(0, 255, 0)",
+      "toolbar_field_separator": "rgb(0, 255, 0)"
+    }
+  }
+}
