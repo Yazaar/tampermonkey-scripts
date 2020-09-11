@@ -1,2 +1,2 @@
 # tampermonkey-scripts
-yup, scripts for tampermonkey. Do I really have to describe this? :)
+## the tampermonkey addon/extension is dope, I bet you know about it
