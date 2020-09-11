@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         FireFox Color Import Button
 // @version      1.0.0
-// @description  try to take over the world!
+// @description  Import button for Firefox Color
 // @author       Yazaar
 // @include      *color.firefox.com*
+// @downloadURL  https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/FirefoxColorImportButton.js
 // @grant        none
 // ==/UserScript==
 
