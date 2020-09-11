@@ -4,7 +4,7 @@
 // @description  Import button for Firefox Color
 // @author       Yazaar
 // @include      *color.firefox.com*
-// @downloadURL  https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/FirefoxColorImportButton.js
+// @downloadURL  https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/FirefoxColorImportButton.user.js
 // @grant        none
 // ==/UserScript==
 
