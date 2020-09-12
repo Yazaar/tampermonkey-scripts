@@ -24,6 +24,7 @@
         var exportBtn = document.querySelector('.Export');
         if (exportBtn !== null) {
             var importBtn = exportBtn.cloneNode(1);
+            importBtn.title = 'Import';
             importBtn.querySelector('img').style.transform = 'rotate(180deg)';
             importBtn.querySelector('span').innerText = 'Import';
             importBtn.addEventListener('click', function () {
