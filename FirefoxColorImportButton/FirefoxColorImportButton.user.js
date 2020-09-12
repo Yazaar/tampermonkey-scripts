@@ -55,9 +55,61 @@
         e.style.padding = '1rem';
         e.style.textAlign = 'center';
         var text = document.createElement('p');
-        text.innerText = 'import manifest file (paste data):';
+        text.innerText = 'import manifest file';
+        text.style.margin = '0';
         text.style.color = '#FFFFFF';
         e.appendChild(text);
+        var text2 = document.createElement('p');
+        text2.innerText = 'upload file or paste data';
+        text2.style.margin = '.1rem 0 .5rem 0';
+        text2.style.color = '#FFFFFF';
+        e.appendChild(text2);
+        var fr = new FileReader();
+        fr.addEventListener('load', function () {
+            var importData = validateImport(this.result);
+            if (importData !== null) {
+                localStorage.setItem('THEME-' + new Date().getTime() + '-' + Math.floor(Math.random() * 900 + 100), importData);
+                window.location = location.origin + '?imported=1';
+                e.style.display = 'none';
+            } else {
+                freeze = true;
+                var prev = uploadFileBtn.innerText;
+                uploadFileBtn.innerText = 'invalid';
+                setTimeout(function () {
+                    uploadFileBtn.innerText = prev;
+                    freeze = false;
+                }, 2000);
+            }
+        });
+        var fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.addEventListener('input', function () {
+            if (freeze === true) {
+                return;
+            }
+            fr.readAsText(this.files[0]);
+        });
+        var uploadFileBtn = document.createElement('button');
+        uploadFileBtn.innerText = 'upload manifest.json';
+        uploadFileBtn.style.marginTop = '.2rem'
+        uploadFileBtn.style.background = '#000000';
+        uploadFileBtn.style.borderColor = 'rgb(100, 100, 100) rgb(50, 50, 50) rgb(50, 50, 50) rgb(100, 100, 100)';
+        uploadFileBtn.style.borderStyle = 'solid';
+        uploadFileBtn.style.borderWidth = '.2rem';
+        uploadFileBtn.style.color = '#FFFFFF';
+        uploadFileBtn.style.cursor = 'pointer';
+        uploadFileBtn.addEventListener('click', function () {
+            if (freeze === true) {
+                return;
+            }
+            fileInput.click();
+        });
+        e.appendChild(uploadFileBtn);
+        var text3 = document.createElement('p');
+        text3.innerText = 'OR';
+        text3.style.margin = '.1rem 0';
+        text3.style.color = '#FFFFFF';
+        e.appendChild(text3);
         var inputField = document.createElement('input');
         inputField.type = 'text';
         inputField.style.background = 'rgba(0, 0, 0, .2)';
@@ -75,6 +127,7 @@
                 localStorage.setItem('THEME-' + new Date().getTime() + '-' + Math.floor(Math.random() * 900 + 100), importData);
                 window.location = location.origin + '?imported=1';
                 e.style.display = 'none';
+                freeze = false;
             } else {
                 var prev = this.innerText;
                 this.innerText = 'invalid';
