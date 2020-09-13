@@ -2,7 +2,9 @@
 
 ![preview image](https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/preview.jpg "import button!")
 
-# [BIG INSTALL LINK](https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/FirefoxColorImportButton.user.js)
+### [install tampermonkey here](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)
+
+## [BIG SCRIPT INSTALL LINK (tampermonkey required)](https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/FirefoxColorImportButton.user.js)
 
 The web browser Firefox got this thing called [Firefox color](https://color.firefox.com) which is dope. With this magical site together with their official addon is browser customization made possible. You can export your browser themes but there is no way to import again. Stupid right? (Yes you can use a preset URL but how about no) **This** tampermonkey script is here to save your day, import any exported theme (theme.zip required). Just upload *manifest.json* found inside the exported *theme.zip* and you will find it under the *saved themes* tab. Uploading is made easy, just click the upload button next to the export button top right.
 
