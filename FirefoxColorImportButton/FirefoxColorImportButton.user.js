@@ -86,6 +86,14 @@
         text.style.margin = '0';
         text.style.color = '#FFFFFF';
         e.appendChild(text);
+        var textDescrition = document.createElement('p');
+        textDescrition.innerText = 'The manifest.json file is located within theme.zip/xpi';
+        textDescrition.style.margin = '5px 0';
+        textDescrition.style.color = '#9E9E9E';
+        textDescrition.style.textAlign = 'center';
+        textDescrition.style.maxWidth = '30ch';
+        textDescrition.style.fontSize = '0.8rem';
+        e.appendChild(textDescrition);
         var text2 = document.createElement('p');
         text2.innerText = 'upload file or paste data';
         text2.style.margin = '2px 0 5px 0';
