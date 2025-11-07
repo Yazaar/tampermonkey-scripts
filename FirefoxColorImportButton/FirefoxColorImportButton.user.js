@@ -1,15 +1,18 @@
 // ==UserScript==
 // @name         FireFox Color Import Button
-// @version      1.0.0
+// @version      1.1.0
 // @description  Import button for Firefox Color
 // @author       Yazaar
 // @include      *color.firefox.com*
 // @downloadURL  https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/FirefoxColorImportButton.user.js
+// @updateURL    https://raw.githubusercontent.com/Yazaar/tampermonkey-scripts/master/FirefoxColorImportButton/FirefoxColorImportButton.user.js
 // @grant        none
 // ==/UserScript==
 
 (function () {
     'use strict';
+
+    var SESSION_STORAGE_IMPORTED_KEY = 'yazaar.ffx-color.imported';
 
     function loop() {
         if (changeQuote === true) {
@@ -21,22 +24,45 @@
                 quoteAuthorElement.innerText = '-Yazaar';
             }
         }
-        var exportBtn = document.querySelector('.Export');
-        if (exportBtn !== null) {
-            var importBtn = exportBtn.cloneNode(1);
-            importBtn.title = 'Import';
-            importBtn.querySelector('img').style.transform = 'rotate(180deg)';
-            importBtn.querySelector('span').innerText = 'Import';
-            importBtn.addEventListener('click', function () {
-                if (active === false) {
-                    active = true;
-                    importSect.style.display = 'flex';
-                }
-            });
-            exportBtn.parentNode.appendChild(importBtn);
-        } else {
+
+        var buttonControls = document.querySelector('.app-header__controls');
+        var buttonControlsButton = buttonControls?.querySelector('.app-header__button');
+
+        if (!buttonControls || !buttonControlsButton) {
             setTimeout(loop, 100);
+            return;
         }
+
+        var importBtn = buttonControlsButton.cloneNode(1);
+        importBtn.title = 'Import';
+
+        const importSpan = importBtn.querySelector('span');
+        const importImg = importBtn.querySelector('img');
+
+        if (importSpan) importSpan.innerText = 'Import';
+
+        importBtn.addEventListener('click', function () {
+            if (active === false) {
+                active = true;
+                importSect.style.display = 'flex';
+            }
+        });
+
+        if (importImg) {
+            importImg.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjYiIGhlaWdodD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudz'
+             + 'Mub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMiAyMkMxMiAyMi4yNjUyIDEyLjEwNTQgMjIuNTE5NiAxMi4yOTI5IDI'
+             + 'yLjcwNzFDMTIuNDgwNCAyMi44OTQ2IDEyLjczNDggMjMgMTMgMjNDMTMuMjY1MiAyMyAxMy41MTk2IDIyLjg5NDYgMTMuNzA3MSAyMi43MDcxQzEzLjg5NDYgMjIuNTE5NiAxNCAyMi4yNjUy'
+             + 'IDE0IDIyTDE0IDEwLjQxNEwxOC4yOTMgMTQuNzA3QzE4LjQ4MTYgMTQuODg5MiAxOC43MzQyIDE0Ljk5IDE4Ljk5NjQgMTQuOTg3N0MxOS4yNTg2IDE0Ljk4NTQgMTkuNTA5NCAxNC44ODAyI'
+             + 'DE5LjY5NDggMTQuNjk0OEMxOS44ODAyIDE0LjUwOTQgMTkuOTg1NCAxNC4yNTg2IDE5Ljk4NzcgMTMuOTk2NEMxOS45OSAxMy43MzQyIDE5Ljg4OTIgMTMuNDgxNiAxOS43MDcgMTMuMjkzTD'
+             + 'EzLjcwNyA3LjI5M0MxMy41MTk1IDcuMTA1NTMgMTMuMjY1MiA3LjAwMDIxIDEzIDcuMDAwMjFDMTIuNzM0OCA3LjAwMDIxIDEyLjQ4MDUgNy4xMDU1MyAxMi4yOTMgNy4yOTNMNi4yOTMgMTM'
+             + 'uMjkzQzYuMTEwODQgMTMuNDgxNiA2LjAxMDA1IDEzLjczNDIgNi4wMTIzMyAxMy45OTY0QzYuMDE0NiAxNC4yNTg2IDYuMTE5NzcgMTQuNTA5NCA2LjMwNTE4IDE0LjY5NDhDNi40OTA1OSAx'
+             + 'NC44ODAyIDYuNzQxNCAxNC45ODU0IDcuMDAzNiAxNC45ODc3QzcuMjY1OCAxNC45OSA3LjUxODQgMTQuODg5MiA3LjcwNyAxNC43MDdMMTIgMTAuNDE0TDEyIDIyWk0yMCA0QzIwIDQuMjY1M'
+             + 'jIgMTkuODk0NiA0LjUxOTU3IDE5LjcwNzEgNC43MDcxMUMxOS41MTk2IDQuODk0NjQgMTkuMjY1MiA1IDE5IDVMNyA1QzYuNzM0NzkgNSA2LjQ4MDQzIDQuODk0NjQgNi4yOTI4OSA0LjcwNz'
+             + 'ExQzYuMTA1MzYgNC41MTk1NyA2IDQuMjY1MjIgNiA0QzYgMy43MzQ3OCA2LjEwNTM2IDMuNDgwNDMgNi4yOTI4OSAzLjI5Mjg5QzYuNDgwNDMgMy4xMDUzNSA2LjczNDc5IDMgNyAzTDE5IDN'
+             + 'DMTkuMjY1MiAzIDE5LjUxOTYgMy4xMDUzNiAxOS43MDcxIDMuMjkyODlDMTkuODk0NiAzLjQ4MDQzIDIwIDMuNzM0NzggMjAgNFoiIGZpbGw9ImJsYWNrIi8+Cjwvc3ZnPgo=';
+        }
+
+        buttonControls.appendChild(importBtn);
     }
 
     function buildSect() {
@@ -48,12 +74,12 @@
         e.style.left = '50%';
         e.style.top = '50%';
         e.style.zIndex = '999999';
-        e.style.background = 'rgba(0, 0, 0, .75)';
-        e.style.borderRadius = '1rem';
-        e.style.border = '#000000 .25rem solid';
+        e.style.background = 'rgba(0, 0, 0, .85)';
+        e.style.borderRadius = '10px';
+        e.style.border = '#000000 8px solid';
         e.style.maxWidth = '90vw';
         e.style.maxHeight = '90vh';
-        e.style.padding = '1rem';
+        e.style.padding = '15px';
         e.style.textAlign = 'center';
         var text = document.createElement('p');
         text.innerText = 'import manifest file';
@@ -62,7 +88,7 @@
         e.appendChild(text);
         var text2 = document.createElement('p');
         text2.innerText = 'upload file or paste data';
-        text2.style.margin = '.1rem 0 .5rem 0';
+        text2.style.margin = '2px 0 5px 0';
         text2.style.color = '#FFFFFF';
         e.appendChild(text2);
         var fr = new FileReader();
@@ -70,8 +96,9 @@
             var importData = validateImport(this.result);
             if (importData !== null) {
                 localStorage.setItem('THEME-' + new Date().getTime() + '-' + Math.floor(Math.random() * 900 + 100), importData);
-                window.location = location.origin + '?imported=1';
+                sessionStorage.setItem(SESSION_STORAGE_IMPORTED_KEY, '1');
                 e.style.display = 'none';
+                window.location.reload();
             } else {
                 freeze = true;
                 var prev = uploadFileBtn.innerText;
@@ -92,11 +119,11 @@
         });
         var uploadFileBtn = document.createElement('button');
         uploadFileBtn.innerText = 'upload manifest.json';
-        uploadFileBtn.style.marginTop = '.2rem'
+        uploadFileBtn.style.marginTop = '3px'
         uploadFileBtn.style.background = '#000000';
         uploadFileBtn.style.borderColor = 'rgb(100, 100, 100) rgb(50, 50, 50) rgb(50, 50, 50) rgb(100, 100, 100)';
         uploadFileBtn.style.borderStyle = 'solid';
-        uploadFileBtn.style.borderWidth = '.2rem';
+        uploadFileBtn.style.borderWidth = '3px';
         uploadFileBtn.style.color = '#FFFFFF';
         uploadFileBtn.style.cursor = 'pointer';
         uploadFileBtn.addEventListener('click', function () {
@@ -108,15 +135,15 @@
         e.appendChild(uploadFileBtn);
         var text3 = document.createElement('p');
         text3.innerText = 'OR';
-        text3.style.margin = '.1rem 0';
+        text3.style.margin = '2px 0';
         text3.style.color = '#FFFFFF';
         e.appendChild(text3);
         var inputField = document.createElement('input');
         inputField.type = 'text';
-        inputField.style.background = 'rgba(0, 0, 0, .2)';
-        inputField.style.border = 'rgba(0, 0, 0, .5) .2rem solid';
+        inputField.style.background = '#000000';
+        inputField.style.border = 'rgba(255, 255, 255, .5) 3px solid';
         inputField.style.color = '#FFFFFF';
-        inputField.style.borderRadius = '.5rem';
+        inputField.style.borderRadius = '6px';
         e.appendChild(inputField);
         var importBtn = document.createElement('button');
         importBtn.addEventListener('click', function () {
@@ -126,9 +153,10 @@
             var importData = validateImport(inputField.value);
             if (importData !== null) {
                 localStorage.setItem('THEME-' + new Date().getTime() + '-' + Math.floor(Math.random() * 900 + 100), importData);
-                window.location = location.origin + '?imported=1';
+                sessionStorage.setItem(SESSION_STORAGE_IMPORTED_KEY, '1');
                 e.style.display = 'none';
                 freeze = false;
+                window.location.reload();
             } else {
                 var prev = this.innerText;
                 this.innerText = 'invalid';
@@ -139,11 +167,11 @@
             }
         });
         importBtn.innerText = 'import';
-        importBtn.style.marginTop = '.2rem'
+        importBtn.style.marginTop = '8px'
         importBtn.style.background = '#000000';
         importBtn.style.borderColor = 'rgb(100, 100, 100) rgb(50, 50, 50) rgb(50, 50, 50) rgb(100, 100, 100)';
         importBtn.style.borderStyle = 'solid';
-        importBtn.style.borderWidth = '.2rem';
+        importBtn.style.borderWidth = '3px';
         importBtn.style.color = '#FFFFFF';
         importBtn.style.cursor = 'pointer';
         e.appendChild(importBtn);
@@ -156,11 +184,11 @@
             }
         });
         cancelBtn.innerText = 'cancel';
-        cancelBtn.style.marginTop = '.5rem';
+        cancelBtn.style.marginTop = '6px';
         cancelBtn.style.background = '#000000';
         cancelBtn.style.borderColor = 'rgb(100, 100, 100) rgb(50, 50, 50) rgb(50, 50, 50) rgb(100, 100, 100)';
         cancelBtn.style.borderStyle = 'solid';
-        cancelBtn.style.borderWidth = '.2rem';
+        cancelBtn.style.borderWidth = '3px';
         cancelBtn.style.color = '#FFFFFF';
         cancelBtn.style.cursor = 'pointer';
         e.appendChild(cancelBtn);
@@ -207,7 +235,12 @@
             modified: new Date().getTime()
         });
     }
-    var changeQuote = new URLSearchParams(location.search).get('imported') === '1';
+
+    var changeQuote = sessionStorage.getItem(SESSION_STORAGE_IMPORTED_KEY) === '1';
+    if (changeQuote) {
+        sessionStorage.removeItem(SESSION_STORAGE_IMPORTED_KEY);
+    }
+
     var active = false;
     var freeze = false;
     var importSect = buildSect();
